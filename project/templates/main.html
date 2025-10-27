@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+
+{% block title %}Translator & Contributor{% endblock %}
+
+{% block content %}
+<main class="translator-container">
+    <section id="translator-section">
+        <h1>Welcome, let's explore language together!</h1>
+        <form id="translationForm">
+            <label for="english_text">Enter English text</label>
+            <textarea id="english_text" rows="5" placeholder="Type here..."></textarea>
+            
+            <label for="language_selector">Translate to:</label>
+            <select id="language_selector" class="language-select">
+                <option value="" disabled selected>Choose Language</option>
+                {% for code, file in languages.items() %}
+                <option value="{{ code }}">{{ code | capitalize }}</option>
+                {% endfor %}
+            </select>
+            
+            <div id="translation-output">
+                <p id="output">Translation will appear here</p>
+                <div class="button-group">
+                    <button type="submit" id="translateBtn"><i class="fas fa-language"></i> Translate</button>
+                    <button type="button" id="micBtn"><i class="fas fa-microphone"></i> Speak</button>
+                    <button type="button" id="listenBtn" onclick="speakTranslation()"><i class="fas fa-volume-up"></i> Listen</button>
+                    <button type="button" id="downloadBtn" onclick="downloadTranslation()"><i class="fas fa-download"></i> Download</button>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <hr>
+
+    <section id="contribution-section">
+        <h2>🤝 Contribute a Translation</h2>
+        <form id="contributionForm">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <label for="contrib_english">English Text</label>
+            <input type="text" id="contrib_english" placeholder="Enter English text..." required>
+
+            <label for="contrib_translation">Translated Text</label>
+            <input type="text" id="contrib_translation" placeholder="Enter translated text..." required>
+
+            <label for="contrib_language_selector">Select Language:</label>
+            <select id="contrib_language_selector" class="language-select" required>
+                <option value="" disabled selected>Select Language</option>
+                {% for code, file in languages.items() %}
+                <option value="{{ code }}">{{ code | capitalize }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Submit Contribution</button>
+        </form>
+        <p id="contribMessage"></p>
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Zambian Language Translator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f8fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        /* Utility Class for Screen Readers */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Authentication Container */
+        .auth-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+        }
+
+        /* Authentication Box */
+        .auth-box {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .auth-box h2 {
+            margin-bottom: 1.5rem;
+            color: #0d47a1;
+        }
+
+        /* Form Elements */
+        .auth-box input {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .auth-box button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .auth-box button:hover {
+            background-color: #0d47a1;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Links */
+        .link {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .link a {
+            color: #1976d2;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .link a:hover {
+            color: #0d47a1;
+        }
+
+        /* Flash Message Styles */
+        .flash-message {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .flash-message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .flash-message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        /* Dark Mode Styles */
+        body.dark {
+            background-color: #121212;
+        }
+        
+        body.dark .auth-box {
+            background-color: #1e1e1e;
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark .auth-box h2 {
+            color: #90caf9;
+        }
+
+        body.dark .auth-box input {
+            background-color: #2c2c2c;
+            color: #f5f5f5;
+            border-color: #555;
+        }
+
+        body.dark .auth-box button {
+            background-color: #1e88e5;
+        }
+
+        body.dark .auth-box button:hover {
+            background-color: #1565c0;
+        }
+
+        body.dark .link a {
+            color: #1e88e5;
+        }
+
+        body.dark .link a:hover {
+            color: #1565c0;
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            .auth-box {
+                padding: 1.5rem;
+            }
+
+            .auth-box h2 {
+                font-size: 1.5rem;
+            }
+
+            .auth-box input,
+            .auth-box button {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('login') }}" method="POST" class="auth-box">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <h2>🔐 Login</h2>
+
+            <label for="username" class="sr-only">Username</label>
+            <input type="text" id="username" name="username" placeholder="Username" required autocomplete="username" />
+
+            <label for="password" class="sr-only">Password</label>
+            <input type="password" id="password" name="password" placeholder="Password" required autocomplete="current-password" />
+
+            <button type="submit">Login</button>
+            <p class="link">Don't have an account? <a href="{{url_for('register')}}">Register</a></p>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Review - Zambian Translator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 30px 20px;
+            background-color: #f5f8fa;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        h1 {
+            color: #0d47a1;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        thead {
+            background: #1976d2;
+            color: white;
+        }
+
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tbody tr:hover {
+            background-color: #e3f2fd;
+            cursor: default;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: #121212;
+            color: #f5f5f5;
+        }
+
+        body.dark-mode h1 {
+            color: #90caf9;
+        }
+
+        body.dark-mode table {
+            background: #1e1e1e;
+            box-shadow: 0 6px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode thead {
+            background: #1565c0;
+            color: #eee;
+        }
+
+        body.dark-mode tbody tr:hover {
+            background-color: #1a237e;
+        }
+
+        body.dark-mode tbody td {
+            border-color: #333;
+        }
+
+        /* Responsive for mobile */
+        @media (max-width: 600px) {
+            body {
+                padding: 15px 10px;
+            }
+
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            thead tr {
+                display: none;
+            }
+
+            tbody tr {
+                margin-bottom: 20px;
+                background: white;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                border-radius: 12px;
+                padding: 15px;
+            }
+
+            body.dark-mode tbody tr {
+                background: #1e1e1e;
+                box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+            }
+
+            tbody td {
+                padding-left: 50%;
+                position: relative;
+                border: none;
+                border-bottom: 1px solid #eee;
+            }
+
+            body.dark-mode tbody td {
+                border-bottom: 1px solid #333;
+            }
+
+            tbody td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                font-weight: 700;
+                color: #1976d2;
+            }
+
+            body.dark-mode tbody td::before {
+                color: #90caf9;
+            }
+        }
+
+        /* Dark mode toggle */
+        .toggle-container {
+            max-width: 900px;
+            margin: 0 auto 30px auto;
+            text-align: right;
+            font-weight: 600;
+            user-select: none;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+            vertical-align: middle;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #2196f3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+    </style>
+</head>
+<body>
+    <div class="toggle-container">
+        Dark Mode
+        <label class="switch">
+            <input type="checkbox" id="darkModeToggle" />
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <h1>Admin Panel - All Users</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Is Admin?</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td data-label="ID">{{ user.id }}</td>
+                <td data-label="Username">{{ user.username }}</td>
+                <td data-label="Is Admin?">{{ '✅' if user.is_admin else '❌' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        const darkToggle = document.getElementById('darkModeToggle');
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            darkToggle.checked = true;
+        }
+        darkToggle.addEventListener('change', () => {
+            if (darkToggle.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    </script>
+</body>
+</html>

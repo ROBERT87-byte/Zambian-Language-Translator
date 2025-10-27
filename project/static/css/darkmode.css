@@ -1,0 +1,232 @@
+/* ===================================================================
+   Base & Light Mode Styles (The defaults)
+   =================================================================== */
+
+/* Define CSS Variables for both themes */
+:root {
+    /* Light Mode Colors */
+    --body-bg-light: #f0f8ff;
+    --body-bg-gradient-light: linear-gradient(to bottom, #f0f8ff, #e0f7fa);
+    --text-color-light: #333;
+    --heading-color-light: #00897b;
+    --link-color-light: #00796b;
+    --table-bg-light: #ffffff;
+    --table-border-light: #e0e0e0;
+    --table-header-bg-light: #f4f4f4;
+    --table-row-hover-light: #f9f9f9;
+    --button-bg-light: #00897b;
+    --button-text-light: white;
+    --button-hover-light: #004d40;
+    --flash-success-bg-light: #d4edda;
+    --flash-success-text-light: #155724;
+    --flash-error-bg-light: #f8d7da;
+    --flash-error-text-light: #721c24;
+
+    /* Dark Mode Colors */
+    --body-bg-dark: #121212;
+    --body-bg-gradient-dark: linear-gradient(to bottom, #1a1a1a, #333);
+    --text-color-dark: #e0e0e0;
+    --heading-color-dark: #00bfa5;
+    --link-color-dark: #00bfa5;
+    --table-bg-dark: #1e1e1e;
+    --table-border-dark: #444;
+    --table-header-bg-dark: #2a2a2a;
+    --table-row-hover-dark: #3a3a3a;
+    --button-bg-dark: #00bfa5;
+    --button-text-dark: #121212;
+    --button-hover-dark: #008e76;
+    --flash-success-bg-dark: #1c4b2c;
+    --flash-success-text-dark: #a3e6a3;
+    --flash-error-bg-dark: #5c181f;
+    --flash-error-text-dark: #f1b0b7;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: var(--body-bg-gradient-light);
+    color: var(--text-color-light);
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4 {
+    color: var(--heading-color-light);
+}
+
+a {
+    color: var(--link-color-light);
+    transition: color 0.3s ease;
+}
+
+.contributions-table {
+    width: 90%;
+    margin: 2rem auto;
+    border-collapse: collapse;
+    background-color: var(--table-bg-light);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden; /* Ensures rounded corners */
+}
+
+.contributions-table thead tr {
+    background-color: var(--table-header-bg-light);
+}
+
+.contributions-table th, .contributions-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--table-border-light);
+    text-align: left;
+}
+
+.contributions-table th {
+    font-weight: 600;
+}
+
+.contributions-table tbody tr:hover {
+    background-color: var(--table-row-hover-light);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 2rem;
+    font-style: italic;
+    color: #666;
+}
+
+/* Flash Messages */
+.flash-message {
+    padding: 1rem;
+    margin: 1rem auto;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 5px;
+    text-align: center;
+}
+.flash-message.success {
+    background-color: var(--flash-success-bg-light);
+    color: var(--flash-success-text-light);
+}
+.flash-message.error {
+    background-color: var(--flash-error-bg-light);
+    color: var(--flash-error-text-light);
+}
+
+/* ===================================================================
+   Dark Mode Styles
+   =================================================================== */
+
+/* This class will be toggled by JavaScript on the <body> */
+body.dark-mode {
+    background: var(--body-bg-gradient-dark);
+    color: var(--text-color-dark);
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4 {
+    color: var(--heading-color-dark);
+}
+
+body.dark-mode a {
+    color: var(--link-color-dark);
+}
+
+body.dark-mode .contributions-table {
+    background-color: var(--table-bg-dark);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .contributions-table thead tr {
+    background-color: var(--table-header-bg-dark);
+    color: var(--text-color-dark);
+}
+
+body.dark-mode .contributions-table th, 
+body.dark-mode .contributions-table td {
+    border-bottom-color: var(--table-border-dark);
+}
+
+body.dark-mode .contributions-table tbody tr:hover {
+    background-color: var(--table-row-hover-dark);
+}
+
+body.dark-mode .empty-state {
+    color: #b0b0b0;
+}
+
+/* Flash Messages in Dark Mode */
+body.dark-mode .flash-message.success {
+    background-color: var(--flash-success-bg-dark);
+    color: var(--flash-success-text-dark);
+}
+body.dark-mode .flash-message.error {
+    background-color: var(--flash-error-bg-dark);
+    color: var(--flash-error-text-dark);
+}
+
+/* ===================================================================
+   Toggle Switch Styles (from your provided HTML)
+   =================================================================== */
+.toggle-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-color-light); /* Will be overridden in dark mode */
+}
+
+body.dark-mode .toggle-container {
+    color: var(--text-color-dark);
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}

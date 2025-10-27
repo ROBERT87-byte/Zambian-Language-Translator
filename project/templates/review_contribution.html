@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Review Contributions - Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 30px 20px;
+            background-color: #f5f8fa;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        /* Utility classes */
+        .flash-message {
+            max-width: 1000px;
+            margin: 0 auto 20px auto;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .flash-message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .flash-message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        /* Typography */
+        h1 {
+            color: #0d47a1;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        
+        .empty-state {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            padding: 50px;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        thead {
+            background: #1976d2;
+            color: white;
+        }
+        
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            vertical-align: middle;
+        }
+        
+        tbody tr:hover {
+            background-color: #e3f2fd;
+            cursor: default;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Buttons */
+        button.approve, button.reject {
+            padding: 6px 14px;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+        
+        button.approve {
+            background-color: #388e3c;
+        }
+        
+        button.approve:hover {
+            background-color: #2e7d32;
+        }
+        
+        button.reject {
+            background-color: #d32f2f;
+        }
+        
+        button.reject:hover {
+            background-color: #b71c1c;
+        }
+
+        /* Dark mode toggle */
+        .toggle-container {
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+            text-align: right;
+            font-weight: 600;
+            user-select: none;
+            color: #333;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+            vertical-align: middle;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #2196f3;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Responsive for mobile */
+        @media (max-width: 700px) {
+            body {
+                padding: 15px 10px;
+            }
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            thead tr {
+                display: none;
+            }
+            tbody tr {
+                margin-bottom: 25px;
+                background: white;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                border-radius: 12px;
+                padding: 15px;
+            }
+            tbody td {
+                padding-left: 50%;
+                position: relative;
+                border: none;
+                border-bottom: 1px solid #eee;
+                text-align: right;
+            }
+            tbody td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                font-weight: 700;
+                color: #1976d2;
+                text-align: left;
+            }
+            tbody td button {
+                width: 48%;
+                margin: 5px 1%;
+                font-size: 14px;
+            }
+        }
+
+        /* Dark mode */
+        body.dark-mode {
+            background-color: #121212;
+            color: #f5f5f5;
+        }
+
+        body.dark-mode .toggle-container {
+            color: #f5f5f5;
+        }
+        
+        body.dark-mode h1 {
+            color: #90caf9;
+        }
+        
+        body.dark-mode .empty-state {
+            color: #ccc;
+        }
+
+        body.dark-mode table {
+            background: #1e1e1e;
+            box-shadow: 0 6px 15px rgba(255, 255, 255, 0.1);
+        }
+        
+        body.dark-mode thead {
+            background: #1565c0;
+            color: #eee;
+        }
+        
+        body.dark-mode tbody tr:hover {
+            background-color: #1a237e;
+        }
+        
+        body.dark-mode tbody td {
+            border-bottom: 1px solid #333;
+        }
+        
+        body.dark-mode tbody td::before {
+            color: #90caf9;
+        }
+
+        body.dark-mode button.approve {
+            background-color: #4caf50;
+        }
+        
+        body.dark-mode button.approve:hover {
+            background-color: #388e3c;
+        }
+        
+        body.dark-mode button.reject {
+            background-color: #e57373;
+        }
+        
+        body.dark-mode button.reject:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toggle-container">
+        Dark Mode
+        <label class="switch">
+            <input type="checkbox" id="darkModeToggle" />
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <h1>Review Contributions</h1>
+
+    {% if contributions %}
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>English Text</th>
+                <th>Translation</th>
+                <th>Language</th>
+                <th>Contributor</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contrib in contributions %}
+            <tr>
+                <td data-label="ID">{{ contrib.id }}</td>
+                <td data-label="English Text">{{ contrib.english }}</td>
+                <td data-label="Translation">{{ contrib.translation }}</td>
+                <td data-label="Language">{{ contrib.language }}</td>
+                <td data-label="Contributor">{{ contrib.contributor.username }}</td>
+                <td data-label="Actions">
+                    <form style="display:inline;" method="POST" action="{{ url_for('approve_contribution', id=contrib.id) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                        <button class="approve" type="submit" onclick="return confirm('Are you sure you want to approve this contribution?')" aria-label="Approve contribution ID {{ contrib.id }}">Approve</button>
+                    </form>
+                    <form style="display:inline;" method="POST" action="{{ url_for('reject_contribution', id=contrib.id) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                        <button class="reject" type="submit" onclick="return confirm('Are you sure you want to reject this contribution?')" aria-label="Reject contribution ID {{ contrib.id }}">Reject</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty-state">No new contributions to review at this time. Great job keeping up!</p>
+    {% endif %}
+
+    <script>
+        const darkToggle = document.getElementById('darkModeToggle');
+        
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            darkToggle.checked = true;
+        }
+
+        darkToggle.addEventListener('change', () => {
+            if (darkToggle.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Contributions - Zambian Translator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/darkmode.css') }}" />
+</head>
+<body>
+    <div class="toggle-container">
+        Dark Mode
+        <label class="switch">
+            <input type="checkbox" id="darkModeToggle" />
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <h1>My Contributions</h1>
+
+    {% if contributions %}
+    <table class="contributions-table">
+        <thead>
+            <tr>
+                <th>English Text</th>
+                <th>Translation</th>
+                <th>Language</th>
+                <th>Status</th>
+                <th>Date Submitted</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contrib in contributions %}
+            <tr>
+                <td data-label="English Text">{{ contrib.english }}</td>
+                <td data-label="Translation">{{ contrib.translation }}</td>
+                <td data-label="Language">{{ contrib.language | title }}</td>
+                <td data-label="Status">
+                    {% if contrib.status == 'approved' %}
+                        <span class="status-approved">Approved</span>
+                    {% elif contrib.status == 'rejected' %}
+                        <span class="status-rejected">Rejected</span>
+                    {% else %}
+                        <span class="status-pending">Pending</span>
+                    {% endif %}
+                </td>
+                <td data-label="Date Submitted">{{ contrib.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty-state">You have not submitted any contributions yet. <a href="{{ url_for('main') }}">Start contributing now!</a></p>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/darkmode.js') }}"></script>
+</body>
+</html>

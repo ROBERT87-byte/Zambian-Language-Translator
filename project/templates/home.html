@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zambian Language Translator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<style>
+/* General Styles */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f8fa;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #0d47a1;
+}
+
+header p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+    max-width: 400px;
+    width: 100%;
+}
+
+.card h2 {
+    margin-top: 0;
+    color: #1976d2;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 1rem;
+    background-color: #1976d2;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn:hover {
+    background-color: #0d47a1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+footer {
+    margin-top: auto;
+    padding: 1rem;
+    color: #666;
+}
+
+/* Dark Mode Styles */
+body.dark {
+    background-color: #121212;
+    color: #f0f0f0;
+}
+
+body.dark .card {
+    background-color: #1e1e1e;
+    color: #eee;
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+}
+
+body.dark .btn {
+    background-color: #1e88e5;
+}
+
+body.dark .btn:hover {
+    background-color: #1565c0;
+}
+
+/* Toggle Switch - Copied for consistency */
+.toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px; width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196f3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .card {
+        padding: 1.5rem;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+}
+</style>
+<body>
+    <div class="container">
+        <header>
+            <h1>Zambian Language Translator</h1>
+            <p>Speak. Learn. Connect across cultures.</p>
+        </header>
+
+        <main>
+            <div class="card">
+                <h2>🌍 Translate English to Bemba</h2>
+                <p>Instant voice and text translation with smart mode selection.</p>
+                <a href="{{url_for('login')}}" class="btn">Start Translating</a>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Zambian Language Translator</p>
+        </footer>
+    </div>
+    <div class="toggle-container">
+        <label class="switch">
+            <input type="checkbox" id="darkModeToggle">
+            <span class="slider round"></span>
+        </label>
+    </div>
+</body>
+</html>

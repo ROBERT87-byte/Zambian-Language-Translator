@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Zambian Language Translator{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="main-header">
+        <a href="{{ url_for('home') }}" class="app-logo">
+            <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" width="40" alt="Zambian Flag"/>
+            Zambian Language Translator
+        </a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                {% if session.get('user_id') %}
+                <li><a href="{{ url_for('my_contributions') }}">My Contributions</a></li>
+                <li><a href="{{ url_for('leaderboard') }}">Leaderboard</a></li>
+                {% if user and user.role == 'admin' %}
+                <li class="dropdown">
+                    <a href="#" class="dropbtn"><i class="fa-solid fa-user-gear"></i> Admin</a>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('admin_panel') }}">Manage Users</a>
+                        <a href="{{ url_for('review_contributions') }}">Review Contributions</a>
+                    </div>
+                </li>
+                {% endif %}
+                {% endif %}
+            </ul>
+        </nav>
+        <div class="header-actions">
+            {% if session.get('user_id') %}
+            <button class="settings-btn" onclick="toggleSettings()"><i class="fa-solid fa-gear"></i></button>
+            <div id="settingsMenu" class="settings-menu-content">
+                <div class="user-info">
+                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" width="60" alt="User Avatar">
+                    <p><strong>{{ user.username }}</strong><br><span style="font-size: 12px;">User ID: {{ user.id }}</span></p>
+                </div>
+                <hr>
+                <div class="toggle-container">
+                    <span>Dark Mode</span>
+                    <label class="switch">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <hr>
+        <div class="settings-links">
+                <a href="{{ url_for('profile', username=user.username) }}"><i class="fa-solid fa-user"></i> View My Profile</a>
+
+              <a href="{{ url_for('edit_profile') }}"><i class="fa-solid fa-user-pen"></i> Edit Profile</a>
+              <a href="{{ url_for('logout') }}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+            </div>
+            {% else %}
+            <a href="{{ url_for('login') }}" class="btn-login">Login</a>
+            <a href="{{ url_for('register') }}" class="btn-register">Register</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="content-wrapper">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

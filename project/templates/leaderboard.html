@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Top Contributors - Zambian Translator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/darkmode.css') }}" />
+</head>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <h1>Top 10 Contributors</h1>
+
+    {% if top_contributors %}
+    <table class="contributions-table">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Approved Contributions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contributor in top_contributors %}
+            <tr>
+                <td data-label="Rank">{{ loop.index }}</td>
+                <td data-label="Username"><a href="{{ url_for('profile', username=contributor.username) }}">{{ contributor.username }}</a></td>
+                <td data-label="Approved Contributions">{{ contributor.approved_contributions }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty-state">No contributions have been approved yet. Be the first to contribute!</p>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/darkmode.js') }}"></script>
+</body>
+</html>

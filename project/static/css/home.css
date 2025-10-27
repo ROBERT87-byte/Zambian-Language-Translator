@@ -1,0 +1,81 @@
+/* Add to your existing styles.css file */
+/* Status indicators for My Contributions page */
+.status-pending,
+.status-approved,
+.status-rejected {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9em;
+    color: white;
+    white-space: nowrap;
+}
+
+.status-pending {
+    background-color: #ff9800; /* Amber */
+}
+
+.status-approved {
+    background-color: #4caf50; /* Green */
+}
+
+.status-rejected {
+    background-color: #f44336; /* Red */
+}
+
+body.dark-mode .status-pending {
+    background-color: #ffb74d;
+    color: #212121;
+}
+
+body.dark-mode .status-approved {
+    background-color: #81c784;
+    color: #212121;
+}
+
+body.dark-mode .status-rejected {
+    background-color: #e57373;
+    color: #212121;
+}
+
+.contributions-table {
+    /* Use the same table styles you have for your admin pages */
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Add or adjust these styles for a more consistent table appearance on all pages */
+.contributions-table thead {
+    background: #1976d2;
+    color: white;
+}
+.contributions-table th, .contributions-table td {
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+.contributions-table tbody tr:hover {
+    background-color: #e3f2fd;
+    cursor: default;
+    transition: background-color 0.3s ease;
+}
+
+/* Update dark mode styles for the new table class */
+body.dark-mode .contributions-table {
+    background: #222;
+    box-shadow: 0 6px 15px rgba(255,255,255,0.1);
+}
+
+body.dark-mode .contributions-table thead {
+    background: #0d47a1;
+    color: #eee;
+}
+body.dark-mode .contributions-table tbody tr:hover {
+    background-color: #1565c0;
+}
